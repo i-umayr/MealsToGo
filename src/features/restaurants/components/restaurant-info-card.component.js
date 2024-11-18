@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 import { SvgXml } from "react-native-svg";
 import star from "../../../../assets/star";
 import open from "../../../../assets/open";
+import { Spacer } from "../../../components/spacer/spacer.component";
 
 const Title = styled.Text`
   font-family: ${(props) => props.theme.fonts.heading};
@@ -76,9 +77,12 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
           </RatingContainer>
           <LeftContainer>
             {isClosedTemporarily && (
-              <Text style={{ color: "red" }}>Closed Temporarily</Text>
+              <Text varient="label" style={{ color: "red" }}>
+                Closed Temporarily
+              </Text>
             )}
             {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+
             <Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
           </LeftContainer>
         </Row>
