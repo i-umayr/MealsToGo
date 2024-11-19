@@ -24,22 +24,10 @@ const Maps = () => (
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="Home"
-        component={RestaurantsScreen}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Maps"
-        component={Maps}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={Settings}
-        options={{ headerShown: false }}
-      />
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Home" component={RestaurantsScreen} />
+      <Tab.Screen name="Maps" component={Maps} />
+      <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );
 }
