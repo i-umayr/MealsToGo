@@ -8,17 +8,38 @@ import { theme } from "./src/infrastructure/theme";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { Text } from "react-native";
+import { SafeArea } from "./src/components/utility/safe-area.component";
 
-const Settings = () => <Text>Settings</Text>;
-const Maps = () => <Text>Maps</Text>;
+const Settings = () => (
+  <SafeArea>
+    <Text>Settings</Text>
+  </SafeArea>
+);
+const Maps = () => (
+  <SafeArea>
+    <Text>Maps</Text>
+  </SafeArea>
+);
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={RestaurantsScreen} />
-      <Tab.Screen name="Maps" component={Maps} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen
+        name="Home"
+        component={RestaurantsScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Maps"
+        component={Maps}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 }
