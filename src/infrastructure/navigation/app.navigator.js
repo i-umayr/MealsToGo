@@ -4,15 +4,11 @@ import { Text } from "react-native";
 import { SafeArea } from "../../components/utility/safe-area.component";
 import { Ionicons } from "@expo/vector-icons";
 import { RestaurantsNavigator } from "./restaurants.navigator";
+import { MapScreen } from "../../features/map/screens/map.screen";
 
 const Settings = () => (
   <SafeArea>
     <Text>Settings</Text>
-  </SafeArea>
-);
-const Maps = () => (
-  <SafeArea>
-    <Text>Maps</Text>
   </SafeArea>
 );
 
@@ -41,7 +37,7 @@ function MyTabs() {
       })}
     >
       <Tab.Screen name="Restaurants" component={RestaurantsNavigator} />
-      <Tab.Screen name="Maps" component={Maps} />
+      <Tab.Screen name="Maps" component={MapScreen} />
       <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>
   );
