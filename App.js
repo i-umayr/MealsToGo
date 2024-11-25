@@ -1,3 +1,4 @@
+import "./gesture-handler";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { React } from "react";
 import { Oswald_400Regular, useFonts } from "@expo-google-fonts/oswald";
