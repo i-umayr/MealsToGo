@@ -7,6 +7,8 @@ import { RestaurantsContext } from "../../../services/restaurants/restaurants.co
 
 import { Search } from "../components/search.component";
 
+import { Marker } from "react-native-maps";
+
 const Map = styled(MapView)`
   height: 100%;
   width: 100%;
@@ -25,7 +27,19 @@ export const MapScreen = () => {
     const southwestLat = viewport.southwest.lat;
 
     setLatDelta(northeastLat - southwestLat);
-  }, [location, viewport]);
+  }, [location, restaurants]);
+
+  const renderPins = () =>
+    restaurants.map((restaurant) => (
+      <Marker
+        key={restaurant.name}
+        title={restaurant.name}
+        coordinate={{
+          latitude: restaurant.geometry.location.lat,
+          longitude: restaurant.geometry.location.lng,
+        }}
+      />
+    ));
 
   return (
     <>
@@ -38,9 +52,7 @@ export const MapScreen = () => {
           longitudeDelta: 0.02,
         }}
       >
-        {restaurants.map((restaurant) => {
-          return null;
-        })}
+        {renderPins()}
       </Map>
     </>
   );
