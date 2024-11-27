@@ -22,6 +22,7 @@ export const AuthenticationContextProvider = ({ children }) => {
       })
       .catch((e) => {
         setIsLoading(false);
+        console.log(e.message);
         setError(e.message);
       });
   };
@@ -29,6 +30,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   return (
     <AuthenticationContext.Provider
       value={{
+        isAuthenticated: !!user,
         user,
         isLoading,
         error,
