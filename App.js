@@ -9,6 +9,8 @@ import { RestaurantsContextProvider } from "./src/services/restaurants/restauran
 import { LocationContextProvider } from "./src/services/location/location.context";
 import { Navigation } from "./src/infrastructure/navigation";
 import { FavouritesContextProvider } from "./src/services/favourites/favourites.context";
+import { initializeApp } from "firebase/app";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,16 +22,30 @@ export default function App() {
     return null;
   }
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBBczL7cRmsMWwB0zo6ec5A0RpRpJW-hJo",
+    authDomain: "mealstogo-ca682.firebaseapp.com",
+    projectId: "mealstogo-ca682",
+    storageBucket: "mealstogo-ca682.firebasestorage.app",
+    messagingSenderId: "150047645470",
+    appId: "1:150047645470:web:14a78b6ad2d3b4b574f30f",
+  };
+
+  // Initialize Firebase app only once
+  initializeApp(firebaseConfig);
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        <FavouritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantsContextProvider>
-              <Navigation />
-            </RestaurantsContextProvider>
-          </LocationContextProvider>
-        </FavouritesContextProvider>
+        <AuthenticationContextProvider>
+          <FavouritesContextProvider>
+            <LocationContextProvider>
+              <RestaurantsContextProvider>
+                <Navigation />
+              </RestaurantsContextProvider>
+            </LocationContextProvider>
+          </FavouritesContextProvider>
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
