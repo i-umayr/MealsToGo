@@ -1,6 +1,8 @@
-import { useState, createContext, useContext } from "react";
-import { getAuth } from "firebase/auth";
+import { useState, createContext, useEffect } from "react";
+import { auth } from "../../../firebaseConfig";
 import { loginRequest, registerRequest } from "./authentication.service";
+
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export const AuthenticationContext = createContext();
 
@@ -42,8 +44,16 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
 
-  // Get the Firebase auth instance
-  const auth = getAuth();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setIsLoading(true);
+      if (user) {
+        setUser(user);
+        setIsLoading(false);
+      }
+      setIsLoading(false);
+    });
+  }, [user]);
 
   const onLogin = (email, password) => {
     setIsLoading(true);
@@ -57,6 +67,12 @@ export const AuthenticationContextProvider = ({ children }) => {
         setIsLoading(false);
         setError(getErrorMessage(e));
       });
+  };
+
+  const onLogout = () => {
+    signOut(auth).then(() => {
+      setUser(null);
+    });
   };
 
   const onRegister = (email, password, repeatedPassword) => {
@@ -89,6 +105,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         onLogin,
         onRegister,
         clearError,
+        onLogout,
       }}
     >
       {children}

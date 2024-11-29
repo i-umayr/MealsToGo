@@ -5,12 +5,21 @@ import { SafeArea } from "../../components/utility/safe-area.component";
 import { Ionicons } from "@expo/vector-icons";
 import { RestaurantsNavigator } from "./restaurants.navigator";
 import { MapScreen } from "../../features/map/screens/map.screen";
+import { AuthenticationContext } from "../../services/authentication/authentication.context";
+import { useContext } from "react";
+import { Button } from "react-native-paper";
 
-const Settings = () => (
-  <SafeArea>
-    <Text>Settings</Text>
-  </SafeArea>
-);
+const Settings = () => {
+  const { onLogout } = useContext(AuthenticationContext);
+  return (
+    <SafeArea>
+      <Text>Settings</Text>
+      <Button title="Logout" onPress={() => onLogout()}>
+        Logout
+      </Button>
+    </SafeArea>
+  );
+};
 
 const icons = {
   Restaurants: "restaurant",
