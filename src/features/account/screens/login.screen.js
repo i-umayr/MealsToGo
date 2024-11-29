@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   AccountBackground,
   AccountCover,
@@ -15,7 +15,15 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
 export const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { onLogin, error } = useContext(AuthenticationContext);
+  const { onLogin, error, clearError } = useContext(AuthenticationContext);
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      clearError();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   return (
     <AccountBackground>
       <AccountCover />
@@ -36,7 +44,6 @@ export const LoginScreen = ({ navigation }) => {
             textContentType="password"
             secureTextEntry
             autoCapitalize="none"
-            secure
             onChangeText={(p) => setPassword(p)}
           />
         </Spacer>
