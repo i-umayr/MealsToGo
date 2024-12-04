@@ -9,6 +9,10 @@ import { AuthenticationContext } from "../../services/authentication/authenticat
 import { useContext } from "react";
 import { Button } from "react-native-paper";
 
+import { RestaurantsContextProvider } from "../../services/restaurants/restaurants.context";
+import { FavouritesContextProvider } from "../../services/favourites/favourites.context";
+import { LocationContextProvider } from "../../services/location/location.context";
+
 const Settings = () => {
   const { onLogout } = useContext(AuthenticationContext);
   return (
@@ -52,4 +56,12 @@ function MyTabs() {
   );
 }
 
-export const AppNavigator = () => <MyTabs />;
+export const AppNavigator = () => (
+  <FavouritesContextProvider>
+    <LocationContextProvider>
+      <RestaurantsContextProvider>
+        <MyTabs />
+      </RestaurantsContextProvider>
+    </LocationContextProvider>
+  </FavouritesContextProvider>
+);
