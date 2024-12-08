@@ -22,7 +22,7 @@
 - **Context API**: For efficient state management.
 - **Firebase**: For authentication and backend services.
 - **React Native Maps**: For map integration.
-- **Google Places API (or Mock Data)**: To fetch restaurant details and locations.
+- **Google Places API**: To fetch restaurant details and locations.
 
 ---
 
