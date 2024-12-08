@@ -39,9 +39,6 @@
 3. Run the app:
      ```bash
     npx expo start
-  
-
-
 📚 Learning Outcomes
 This project helped in learning and practicing:
 
