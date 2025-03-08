@@ -1,10 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
-import { View, StyleSheet, Alert, Linking } from "react-native";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { CameraView, useCameraPermissions } from "expo-camera";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  Linking,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 
-export const CameraScreen = () => {
+export const CameraScreen = ({ navigation }) => {
   const [permission, requestPermission] = useCameraPermissions();
   const [hasAskedPermission, setHasAskedPermission] = useState(false);
+  const { user } = useContext(AuthenticationContext);
+  const cameraRef = useRef();
+
+  const snap = async () => {
+    console.log("Taking picture");
+    if (cameraRef) {
+      const photo = await cameraRef.current.takePictureAsync();
+      AsyncStorage.setItem(`${user.uid}-photo`, photo.uri);
+      navigation.goBack();
+    }
+  };
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -55,7 +75,14 @@ export const CameraScreen = () => {
 
   return (
     <View style={styles.container}>
-      <CameraView style={styles.camera} facing={"front"}></CameraView>
+      <CameraView
+        style={styles.camera}
+        facing={"front"}
+        ref={(camera) => (cameraRef.current = camera)}
+      ></CameraView>
+      <TouchableOpacity style={styles.button} onPress={snap}>
+        <Text style={styles.buttonText}>Take Picture</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -67,5 +94,17 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
+  },
+  button: {
+    position: "absolute",
+    bottom: 50,
+    alignSelf: "center",
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
   },
 });
