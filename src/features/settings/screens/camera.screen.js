@@ -1,15 +1,32 @@
-import React, { useState, useEffect, useRef, useContext, use } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
-import {
-  View,
-  StyleSheet,
-  Alert,
-  Linking,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import { Alert, Linking, TouchableOpacity, Text } from "react-native";
+import styled from "styled-components/native";
+
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+`;
+
+const Camera = styled(CameraView)`
+  flex: 1;
+`;
+
+const Button = styled(TouchableOpacity)`
+  position: absolute;
+  bottom: 50px;
+  align-self: center;
+  background-color: black;
+  padding: 10px;
+  border-radius: 5px;
+`;
+
+const ButtonText = styled(Text)`
+  color: white;
+  text-align: center;
+`;
 
 export const CameraScreen = ({ navigation }) => {
   const [permission, requestPermission] = useCameraPermissions();
@@ -70,41 +87,15 @@ export const CameraScreen = ({ navigation }) => {
   }, [permission, hasAskedPermission, requestPermission]);
 
   if (!permission?.granted) {
-    return <View />;
+    return <Container />;
   }
 
   return (
-    <View style={styles.container}>
-      <CameraView
-        style={styles.camera}
-        facing={"front"}
-        ref={(camera) => (cameraRef.current = camera)}
-      ></CameraView>
-      <TouchableOpacity style={styles.button} onPress={snap}>
-        <Text style={styles.buttonText}>Take Picture</Text>
-      </TouchableOpacity>
-    </View>
+    <Container>
+      <Camera facing={"front"} ref={(camera) => (cameraRef.current = camera)} />
+      <Button onPress={snap}>
+        <ButtonText>Take Picture</ButtonText>
+      </Button>
+    </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  camera: {
-    flex: 1,
-  },
-  button: {
-    position: "absolute",
-    bottom: 50,
-    alignSelf: "center",
-    backgroundColor: "black",
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "white",
-    textAlign: "center",
-  },
-});
